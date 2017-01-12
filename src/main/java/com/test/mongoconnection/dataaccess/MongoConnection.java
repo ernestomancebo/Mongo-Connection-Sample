@@ -33,12 +33,13 @@ public class MongoConnection {
 													.maxConnectionLifeTime((120 * 1_000));
 													;
 
-			MongoClientURI uri = new MongoClientURI("mongodb://localhost:27017", options);
+			MongoClientURI uri = new MongoClientURI("mongodb://localhost:27017/test", options);
 			
 			logger.info("About to connect to MongoDB @ " + uri.toString());
 			
 			try {
 				mongo = new MongoClient(uri);
+				mongo.setWriteConcern(WriteConcern.ACKNOWLEDGED);
 			} catch (MongoException ex) {
 				logger.error("An error occoured when connecting to MongoDB", ex);
 			} catch (Exception ex) {
@@ -66,7 +67,7 @@ public class MongoConnection {
 
 	public Datastore getDatastore() {
 		if (dataStore == null) {
-			String dbName = "test-db";
+			String dbName = "testdb";
 			logger.debug(format("Starting DataStore on DB: %s", dbName));
 			dataStore = getMorphia().createDatastore(getMongo(), dbName);
 		}

@@ -1,7 +1,7 @@
 package com.test.mongoconnection.services;
 
 import static spark.Spark.get;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 import com.google.gson.Gson;
 import com.mongodb.DBObject;
@@ -23,8 +23,6 @@ public class CupService implements SparkApplication {
 		dao = new CupDao(conn.getDatastore());
 		
 		get("/api/getAll", (req, res) -> {
-			res.header("content-type", "application/json");
-			
 			return dao.find().asList();
 		}, gson::toJson);
 		
@@ -33,10 +31,13 @@ public class CupService implements SparkApplication {
 			DBObject tmp = conn.getMorphia().toDBObject(cup);
 			
 			WriteResult wResult = dao.getCollection().insert(tmp);
-			res.header("content-type", "application/json");
 
 			return wResult.getUpsertedId();
 		}, gson::toJson);
+		
+		after((req, res) -> {
+			res.header("content-type", "application/json");
+		});
 	}
 
 }

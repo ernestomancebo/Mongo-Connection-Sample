@@ -6,7 +6,7 @@ import org.mongodb.morphia.dao.BasicDAO;
 
 import com.test.mongoconnection.models.CupDO;
 
-public class CupDao extends BasicDAO<ObjectId, CupDO> {
+public class CupDao extends BasicDAO<CupDO, ObjectId> {
 
 	public CupDao(Datastore ds) {
 		super(ds);
