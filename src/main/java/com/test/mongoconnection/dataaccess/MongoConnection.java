@@ -25,23 +25,20 @@ public class MongoConnection {
 	private MongoConnection() {}
 	
 	public MongoClient getMongo() throws RuntimeException {
-
 		if (mongo == null) {
 			logger.debug("Starting Mongo");
 			MongoClientOptions.Builder options = MongoClientOptions.builder()
 													.connectionsPerHost(4)
 													.maxConnectionIdleTime((60 * 1_000))
+													.maxConnectionLifeTime((120 * 1_000));
 													;
+
+			MongoClientURI uri = new MongoClientURI("mongodb://localhost:27017", options);
 			
-			String dbUrl = "";
-			logger.debug(format("About to build the client @ %s", dbUrl));
-			
-			MongoClientURI clientUri = new MongoClientURI("localhost",  options);
-			
-			logger.info("About to connect to MongoDB");
+			logger.info("About to connect to MongoDB @ " + uri.toString());
 			
 			try {
-				mongo = new MongoClient(clientUri);
+				mongo = new MongoClient(uri);
 			} catch (MongoException ex) {
 				logger.error("An error occoured when connecting to MongoDB", ex);
 			} catch (Exception ex) {
@@ -56,7 +53,6 @@ public class MongoConnection {
 	}
 
 	public Morphia getMorphia() {
-
 		if (morphia == null) {
 			logger.debug("Starting Morphia");
 			morphia = new Morphia();
@@ -69,7 +65,6 @@ public class MongoConnection {
 	}
 
 	public Datastore getDatastore() {
-
 		if (dataStore == null) {
 			String dbName = "test-db";
 			logger.debug(format("Starting DataStore on DB: %s", dbName));
@@ -80,7 +75,6 @@ public class MongoConnection {
 	}
 
 	public void init() {
-
 		logger.debug("Bootstraping");
 		getMongo();
 		getMorphia();
@@ -88,7 +82,6 @@ public class MongoConnection {
 	}
 	
 	public void close() {
-
 		logger.info("Closing MongoDB connection");
 		if (mongo != null) {
 			try {
