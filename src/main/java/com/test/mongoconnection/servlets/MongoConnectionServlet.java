@@ -5,7 +5,7 @@ import javax.servlet.ServletContextListener;
 
 import com.test.mongoconnection.dataaccess.MongoConnection;
 
-public class MongoClientServlet implements ServletContextListener {
+public class MongoConnectionServlet implements ServletContextListener {
 
 	public void contextInitialized(ServletContextEvent sce) {
 		MongoConnection conn = MongoConnection.getInstance();

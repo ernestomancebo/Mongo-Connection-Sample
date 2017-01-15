@@ -1,7 +1,8 @@
 package com.test.mongoconnection.services;
 
+import static spark.Spark.after;
 import static spark.Spark.get;
-import static spark.Spark.*;
+import static spark.Spark.post;
 
 import com.google.gson.Gson;
 import com.mongodb.DBObject;

@@ -21,6 +21,6 @@
 
 	<!-- Listener that kicks MongoDB -->
 	<listener>
-		<listener-class>com.test.mongoconnection.servlets.MongoClientServlet</listener-class>
+		<listener-class>com.test.mongoconnection.servlets.MongoConnectionServlet</listener-class>
 	</listener>
 </web-app>
