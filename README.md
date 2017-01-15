@@ -17,4 +17,4 @@ To test the API which interacts with MongoDB, call the routes:
   
   Is a GET method that returns all Cups documents registred in the database.
 
-Keep in mind that the project has **localhost** and **27017** as default host and port.
+Keep in mind that the project has **localhost** and **27017** as default host and port for MongoDB server.
